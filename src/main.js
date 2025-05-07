@@ -1,5 +1,5 @@
 import { Application, Assets, Sprite, Graphics } from "pixi.js";
-
+import { Enemy } from './Enemy.js';
 (async () => {
   // Create a new application
   const app = new Application();
@@ -26,7 +26,7 @@ import { Application, Assets, Sprite, Graphics } from "pixi.js";
   app.stage.addChild(bunny);
 
   // Create and add enemy
-  import { Enemy } from './Enemy.js';
+
   const enemy = new Enemy(50, 50);
   app.stage.addChild(enemy);
 
