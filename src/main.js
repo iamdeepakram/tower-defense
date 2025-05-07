@@ -25,26 +25,13 @@ import { Application, Assets, Sprite, Graphics } from "pixi.js";
   // Add the bunny to the stage
   app.stage.addChild(bunny);
 
-  // Draw a rectangle using Graphics
-  // For it is our enemy.
-  const enemy = new Graphics();
-  enemy.fill(0xde3249); // Set the fill color
-  enemy.rect(50, 50, 100, 100); // Draw a rectangle at (50, 50) with width 100 and height 100
-  enemy.fill();
-
-  // Add the enemy to the stage
+  // Create and add enemy
+  import { Enemy } from './Enemy.js';
+  const enemy = new Enemy(50, 50);
   app.stage.addChild(enemy);
 
-  let enemySpeed = 2;
-
   app.ticker.add((time) => {
-    // Move the enemy to the right
-    enemy.x += enemySpeed;
-
-    // Reset position if it goes off screen
-    if (enemy.x > app.screen.width) {
-      enemy.x = -enemy.width * time.deltaTime;
-    }
+    enemy.update(app.screen.width, time.deltaTime);
   });
   app.ticker.add((time) => {
     // Just for fun, let's rotate mr rabbit a little.
