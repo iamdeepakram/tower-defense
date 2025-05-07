@@ -150,14 +150,18 @@ import { placementTilesData } from './placementTilesData.js';
     });
 
     // Update placement tiles
-    placementTiles.forEach(tile => tile.update(mouse.x, mouse.y));
+    if (mouse) {
+      placementTiles.forEach(tile => tile.update(mouse.x, mouse.y));
+    }
   });
 
   // Mouse handling using PixiJS events
-  const mouse = app.renderer.events.rootPointerPosition;
+  const mouse = { x: 0, y: 0 };
 
   app.stage.eventMode = 'static';
-  app.stage.on('pointerdown', () => {
+  app.stage.on('pointerdown', (event) => {
+    mouse.x = event.global.x;
+    mouse.y = event.global.y;
     if (activeTile && !activeTile.occupied && coins - 50 >= 0) {
       coins -= 50;
       document.querySelector('#coins').innerHTML = coins;
@@ -172,8 +176,9 @@ import { placementTilesData } from './placementTilesData.js';
   });
 
   app.stage.on('pointermove', (event) => {
-    mouse.x = event.global.x;
-    mouse.y = event.global.y;
+    const pos = event.global;
+    mouse.x = pos.x;
+    mouse.y = pos.y;
 
     activeTile = null;
     for (const tile of placementTiles) {
