@@ -1,5 +1,5 @@
 
-import { Application, Assets, Sprite, Container } from "pixi.js";
+import { Application, Assets, Sprite, Container, Texture } from "pixi.js";
 import { Enemy } from './Enemy.js';
 import { PlacementTile } from './PlacementTile.js';
 import { Building } from './Building.js';
