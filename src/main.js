@@ -19,8 +19,15 @@ import { placementTilesData } from './placementTilesData.js';
   document.getElementById("pixi-container").appendChild(app.canvas);
 
   // Load game assets
-  const gameMap = await Assets.load("/assets/gameMap.png");
-  const explosionTexture = await Assets.load("/assets/explosion.png");
+  await Assets.load([
+    "/assets/gameMap.png",
+    "/assets/explosion.png",
+    "/assets/orc.png",
+    "/assets/tower.png",
+    "/assets/projectile.png"
+  ]);
+  const gameMap = Texture.from("/assets/gameMap.png");
+  const explosionTexture = Texture.from("/assets/explosion.png");
 
   // Create game map
   const map = new Sprite(gameMap);
