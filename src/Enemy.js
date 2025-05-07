@@ -4,8 +4,7 @@ import { waypoints } from './waypoints.js';
 
 export class Enemy extends Sprite {
   constructor(x = 0, y = 0) {
-    // Initialize with a temporary texture - you'll need to replace 'orc.png' with your actual sprite
-    super(Texture.WHITE);
+    super(Texture.from('/assets/orc.png'));
     this.position.set(x, y);
     this.width = 100;
     this.height = 100;

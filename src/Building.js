@@ -5,7 +5,8 @@ import { Projectile } from './Projectile.js';
 export class Building extends Sprite {
   constructor(x = 0, y = 0) {
     // Initialize with tower texture
-    super(Texture.from('/assets/tower.png'));
+    const texture = Texture.from('/assets/tower.png');
+    super(texture);
     this.position.set(x, y);
     
     this.width = 64 * 2;

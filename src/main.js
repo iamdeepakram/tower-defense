@@ -153,10 +153,11 @@ import { placementTilesData } from './placementTilesData.js';
     placementTiles.forEach(tile => tile.update(mouse.x, mouse.y));
   });
 
-  // Mouse handling
-  const mouse = { x: 0, y: 0 };
+  // Mouse handling using PixiJS events
+  const mouse = app.renderer.events.rootPointerPosition;
 
-  app.view.addEventListener('click', () => {
+  app.stage.eventMode = 'static';
+  app.stage.on('pointerdown', () => {
     if (activeTile && !activeTile.occupied && coins - 50 >= 0) {
       coins -= 50;
       document.querySelector('#coins').innerHTML = coins;
@@ -170,9 +171,9 @@ import { placementTilesData } from './placementTilesData.js';
     }
   });
 
-  app.view.addEventListener('mousemove', (event) => {
-    mouse.x = event.clientX;
-    mouse.y = event.clientY;
+  app.stage.on('pointermove', (event) => {
+    mouse.x = event.global.x;
+    mouse.y = event.global.y;
 
     activeTile = null;
     for (const tile of placementTiles) {

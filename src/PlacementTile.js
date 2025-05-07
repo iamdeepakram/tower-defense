@@ -9,7 +9,8 @@ export class PlacementTile extends Graphics {
     this.color = 0xFFFFFF;
     this.alpha = 0.15;
     this.occupied = false;
-    this.interactive = true;
+    this.eventMode = 'static';
+    this.cursor = 'pointer';
     this.draw();
   }
 
