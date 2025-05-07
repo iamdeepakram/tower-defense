@@ -4,6 +4,7 @@ import { Enemy } from './Enemy.js';
 import { PlacementTile } from './PlacementTile.js';
 import { Building } from './Building.js';
 import { waypoints } from './waypoints.js';
+import { placementTilesData } from './placementTilesData.js';
 
 (async () => {
   // Create application
