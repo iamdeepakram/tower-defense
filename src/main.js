@@ -25,9 +25,12 @@ import { Enemy } from './Enemy.js';
   // Add the bunny to the stage
   app.stage.addChild(bunny);
 
-  // Create and add enemy
+  // Load the enemy texture
+  const enemyTexture = await Assets.load("/assets/orc.png");
 
+  // Create and add enemy
   const enemy = new Enemy(50, 50);
+  enemy.texture = enemyTexture;
   app.stage.addChild(enemy);
 
   app.ticker.add((time) => {

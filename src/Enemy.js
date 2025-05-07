@@ -1,25 +1,73 @@
 
-import { Graphics } from 'pixi.js';
+import { Sprite, Texture, Graphics } from 'pixi.js';
+import { waypoints } from './waypoints.js';
 
-export class Enemy extends Graphics {
-  constructor(x, y, speed = 2) {
-    super();
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
-    this.init();
+export class Enemy extends Sprite {
+  constructor(x = 0, y = 0) {
+    // Initialize with a temporary texture - you'll need to replace 'orc.png' with your actual sprite
+    super(Texture.WHITE);
+    this.position.set(x, y);
+    this.width = 100;
+    this.height = 100;
+    this.waypointIndex = 0;
+    this.health = 100;
+    this.velocity = {
+      x: 0,
+      y: 0
+    };
+    
+    // Create health bar
+    this.healthBar = new Graphics();
+    this.addChild(this.healthBar);
+    
+    // Center point calculations
+    this.center = {
+      x: this.position.x + this.width / 2,
+      y: this.position.y + this.height / 2
+    };
+    this.radius = 50;
   }
 
-  init() {
-    this.fill(0xde3249);
-    this.rect(0, 0, 100, 100);
-    this.fill();
+  drawHealthBar() {
+    this.healthBar.clear();
+    // Red background
+    this.healthBar.beginFill(0xFF0000);
+    this.healthBar.drawRect(0, -15, this.width, 10);
+    this.healthBar.endFill();
+    
+    // Green health
+    this.healthBar.beginFill(0x00FF00);
+    this.healthBar.drawRect(0, -15, (this.width * this.health) / 100, 10);
+    this.healthBar.endFill();
   }
 
-  update(screenWidth, deltaTime) {
-    this.x += this.speed;
-    if (this.x > screenWidth) {
-      this.x = -this.width * deltaTime;
+  update(deltaTime) {
+    const waypoint = waypoints[this.waypointIndex];
+    const yDistance = waypoint.y - this.center.y;
+    const xDistance = waypoint.x - this.center.x;
+    const angle = Math.atan2(yDistance, xDistance);
+
+    const speed = 3;
+
+    this.velocity.x = Math.cos(angle) * speed;
+    this.velocity.y = Math.sin(angle) * speed;
+
+    this.position.x += this.velocity.x * deltaTime;
+    this.position.y += this.velocity.y * deltaTime;
+
+    this.center = {
+      x: this.position.x + this.width / 2,
+      y: this.position.y + this.height / 2
+    };
+
+    if (
+      Math.abs(Math.round(this.center.x) - Math.round(waypoint.x)) < Math.abs(this.velocity.x) &&
+      Math.abs(Math.round(this.center.y) - Math.round(waypoint.y)) < Math.abs(this.velocity.y) &&
+      this.waypointIndex < waypoints.length - 1
+    ) {
+      this.waypointIndex++;
     }
+
+    this.drawHealthBar();
   }
 }
